@@ -214,6 +214,32 @@ service AdminService {
       2: shared.InternalServiceError internalServiceError,
       3: shared.ServiceBusyError serviceBusyError,
     )
+
+  /**
+  * GetDynamicConfig returns values associated with a specified dynamic config parameter.
+  **/
+  GetDynamicConfigResponse GetDynamicConfig(1: GetDynamicConfigRequest request)
+    throws (
+      1: shared.BadRequestError badRequestError,
+      2: shared.InternalServiceError internalServiceError,
+    )
+
+  void UpdateDynamicConfig(1: UpdateDynamicConfigRequest request)
+    throws (
+      1: shared.BadRequestError badRequestError,
+      2: shared.InternalServiceError internalServiceError,
+    )
+
+  void RestoreDynamicConfig(1: RestoreDynamicConfigRequest request)
+    throw (
+      1: shared.BadRequestError badRequestError,
+      2: shared.InternalServiceError internalServiceError,
+    )
+
+  ListDynamicConfigResponse ListDynamicConfig()
+    throw (
+      1: shared.InternalServiceError internalServiceError,
+    )
 }
 
 struct DescribeWorkflowExecutionRequest {
@@ -302,3 +328,45 @@ struct ResendReplicationTasksRequest {
   70: optional i64 (js.type = "Long") endEventID
   80: optional i64 (js.type = "Long") endVersion
 }
+
+struct GetDynamicConfigRequest {
+  10: optional string config_name
+  20: optional bool get_all
+  30: optional list<DynamicConfigFilter> filters
+}
+
+struct GetDynamicConfigResponse {
+  10: optional list<DynamicConfigValue> config_values
+  20: optional string value_source
+}
+
+struct UpdateDynamicConfigRequest {
+  10: optional string config_name
+  20: optional list<DynamicConfigValue> config_values
+}
+
+struct RestoreDynamicConfigRequest {
+  10: optional string config_name
+  20: optional list<DynamicConfigFilter> filters
+}
+
+struct ListDynamicConfigResponse {
+  10: optional list<DynamicConfigEntry> entries
+}
+
+struct DynamicConfigEntry {
+  10: optional string name
+  20: optional string default_value
+  30: optional list<DynamicConfigValue> values
+}
+
+struct DynamicConfigValue {
+  10: optional string value
+  20: optional list<DynamicConfigFilter> filters
+}
+
+struct DynamicConfigFilter {
+  10: optional string name
+  20: optional string value
+}
+

@@ -1,0 +1,100 @@
+// Copyright (c) 2020 Uber Technologies, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+syntax = "proto3";
+
+package uber.cadence.api.v1;
+
+option go_package = "github.com/uber/cadence/.gen/proto/api/v1;apiv1";
+option java_multiple_files = true;
+option java_outer_classname = "ApiProto";
+option java_package = "com.uber.cadence.api.v1";
+
+service ConfigStoreAPI {
+  // GetDynamicConfig returns values associated with a specified dynamic config parameter.
+  rpc GetDynamicConfig(GetDynamicConfigRequest) returns (GetDynamicConfigResponse);
+
+  // UpdateDynamicConfig is used to update one or more values associated with a specified dynamic config parameter.
+  rpc UpdateDynamicConfig(UpdateDynamicConfigRequest) returns (UpdateDynamicConfigResponse);
+
+  // RestoreDynamicConfig is used to remove one or all values associated with a specified dynamic config parameter.
+  rpc RestoreDynamicConfig(RestoreDynamicConfigRequest) returns (RestoreDynamicConfigResponse);
+
+  // ListDynamicConfig returns all dynamic config parameters and associated values.
+  rpc ListDynamicConfig(ListDynamicConfigRequest) returns (ListDynamicConfigResponse);
+}
+
+/* If get_all is True, then all provided filters are ignored and all values associated with config_name
+will be returned. If get_all is False and no filters are specified (or no filter match), fallback value
+will be returned. If get_all is False and a filter(s) is specified, value that matches filter will be returned.
+If config_name cannot be found in database, default value will be returned. */
+message GetDynamicConfigRequest {
+	string config_name = 1;
+  bool get_all = 2;
+	optional repeated DynamicConfigFilter filters = 3;
+}
+
+message GetDynamicConfigResponse {
+	optional repeated DynamicConfigValue config_values = 1;
+  // Message regarding value source and/or type (is default, is fallback, from database, etc.)
+	string value_source = 2;
+}
+
+/* If filters field is not specified in DynamicConfigValue, value will update fallback value which supersedes
+the default value defined in codebase. */
+message UpdateDynamicConfigRequest {
+	string config_name = 1;
+	repeated DynamicConfigValue config_values = 2;
+}
+
+message UpdateDynamicConfigResponse {
+}
+
+// If no filters are specified, all values associated with config_name will be removed.
+message RestoreDynamicConfigRequest {
+	string config_name = 1;
+	optional repeated DynamicConfigFilter filters = 2;
+}
+
+message RestoreDynamicConfigResponse {
+}
+
+message ListDynamicConfigRequest {
+}
+
+message ListDynamicConfigResponse {
+	repeated DynamicConfigEntry entries = 1;
+}
+
+message DynamicConfigEntry {
+	string name = 1;
+	string default_value = 2;
+	repeated DynamicConfigValue values = 3;
+}
+
+message DynamicConfigValue {
+	string value = 1;
+	optional repeated DynamicConfigFilter filters = 2;
+}
+
+message DynamicConfigFilter {
+	string name = 1;
+	string value = 2;
+}
