@@ -231,13 +231,13 @@ service AdminService {
     )
 
   void RestoreDynamicConfig(1: RestoreDynamicConfigRequest request)
-    throw (
+    throws (
       1: shared.BadRequestError badRequestError,
       2: shared.InternalServiceError internalServiceError,
     )
 
   ListDynamicConfigResponse ListDynamicConfig()
-    throw (
+    throws (
       1: shared.InternalServiceError internalServiceError,
     )
 }
