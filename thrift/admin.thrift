@@ -356,17 +356,17 @@ struct ListDynamicConfigResponse {
 
 struct DynamicConfigEntry {
   10: optional string name
-  20: optional string default_value
+  20: optional shared.DataBlob default_value
   30: optional list<DynamicConfigValue> values
 }
 
 struct DynamicConfigValue {
-  10: optional string value
+  10: optional shared.DataBlob value
   20: optional list<DynamicConfigFilter> filters
 }
 
 struct DynamicConfigFilter {
   10: optional string name
-  20: optional string value
+  20: optional shared.DataBlob value
 }
 
