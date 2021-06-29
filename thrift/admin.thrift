@@ -332,41 +332,25 @@ struct ResendReplicationTasksRequest {
 struct GetDynamicConfigRequest {
   10: optional string config_name
   20: optional bool get_all
-  30: optional list<DynamicConfigFilter> filters
+  30: optional list<shared.DynamicConfigFilter> filters
 }
 
 struct GetDynamicConfigResponse {
-  10: optional list<DynamicConfigValue> config_values
+  10: optional list<shared.DynamicConfigValue> config_values
   20: optional string value_source
 }
 
 struct UpdateDynamicConfigRequest {
   10: optional string config_name
-  20: optional list<DynamicConfigValue> config_values
+  20: optional list<shared.DynamicConfigValue> config_values
 }
 
 struct RestoreDynamicConfigRequest {
   10: optional string config_name
-  20: optional list<DynamicConfigFilter> filters
+  20: optional list<shared.DynamicConfigFilter> filters
 }
 
 struct ListDynamicConfigResponse {
-  10: optional list<DynamicConfigEntry> entries
-}
-
-struct DynamicConfigEntry {
-  10: optional string name
-  20: optional shared.DataBlob default_value
-  30: optional list<DynamicConfigValue> values
-}
-
-struct DynamicConfigValue {
-  10: optional shared.DataBlob value
-  20: optional list<DynamicConfigFilter> filters
-}
-
-struct DynamicConfigFilter {
-  10: optional string name
-  20: optional shared.DataBlob value
+  10: optional list<shared.DynamicConfigEntry> entries
 }
 

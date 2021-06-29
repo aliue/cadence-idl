@@ -1743,9 +1743,9 @@ struct CrossClusterStartChildExecutionRequestAttributes {
   20: optional string requestID
   30: optional i64 (js.type = "Long") initiatedEventID
   40: optional StartChildWorkflowExecutionInitiatedEventAttributes initiatedEventAttributes
-  // targetRunID is for scheduling first decision task 
+  // targetRunID is for scheduling first decision task
   // targetWorkflowID is available in initiatedEventAttributes
-  50: optional string targetRunID 
+  50: optional string targetRunID
 }
 
 struct CrossClusterStartChildExecutionResponseAttributes {
@@ -1761,7 +1761,7 @@ struct CrossClusterCancelExecutionRequestAttributes {
   60: optional bool childWorkflowOnly
 }
 
-struct CrossClusterCancelExecutionResponseAttributes { 
+struct CrossClusterCancelExecutionResponseAttributes {
 }
 
 struct CrossClusterSignalExecutionRequestAttributes {
@@ -1812,4 +1812,20 @@ struct RespondCrossClusterTasksCompletedRequest {
 
 struct RespondCrossClusterTasksCompletedResponse {
   10: optional list<CrossClusterTaskRequest> tasks
+}
+
+struct DynamicConfigEntry {
+  10: optional string name
+  20: optional DataBlob default_value
+  30: optional list<DynamicConfigValue> values
+}
+
+struct DynamicConfigValue {
+  10: optional DataBlob value
+  20: optional list<DynamicConfigFilter> filters
+}
+
+struct DynamicConfigFilter {
+  10: optional string name
+  20: optional DataBlob value
 }
