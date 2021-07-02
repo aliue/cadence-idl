@@ -331,12 +331,10 @@ struct ResendReplicationTasksRequest {
 
 struct GetDynamicConfigRequest {
   10: optional string config_name
-  20: optional bool get_all
-  30: optional list<shared.DynamicConfigFilter> filters
 }
 
 struct GetDynamicConfigResponse {
-  10: optional list<shared.DynamicConfigValue> config_values
+  10: optional shared.DynamicConfigEntry config_values
   20: optional string value_source
 }
 
