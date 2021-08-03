@@ -236,7 +236,7 @@ service AdminService {
       2: shared.InternalServiceError internalServiceError,
     )
 
-  ListDynamicConfigResponse ListDynamicConfig()
+  ListDynamicConfigResponse ListDynamicConfig(1: ListDynamicConfigRequest request)
     throws (
       1: shared.InternalServiceError internalServiceError,
     )
@@ -334,7 +334,7 @@ struct GetDynamicConfigRequest {
 }
 
 struct GetDynamicConfigResponse {
-  10: optional shared.DynamicConfigEntry config_values
+  10: optional shared.DataBlob value
   20: optional string value_source
 }
 
@@ -346,6 +346,10 @@ struct UpdateDynamicConfigRequest {
 struct RestoreDynamicConfigRequest {
   10: optional string config_name
   20: optional list<shared.DynamicConfigFilter> filters
+}
+
+struct ListDynamicConfigRequest {
+  10: optional string config_name
 }
 
 struct ListDynamicConfigResponse {
