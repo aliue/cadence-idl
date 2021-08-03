@@ -331,6 +331,7 @@ struct ResendReplicationTasksRequest {
 
 struct GetDynamicConfigRequest {
   10: optional string config_name
+  20: optional list<shared.DynamicConfigFilter> filters
 }
 
 struct GetDynamicConfigResponse {
