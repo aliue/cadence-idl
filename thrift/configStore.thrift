@@ -22,6 +22,21 @@ namespace java com.uber.cadence.configStore
 include "shared.thrift"
 
 struct DynamicConfigBlob {
-	10: optional i64 schema_version
-	20: optional list<shared.DynamicConfigEntry> entries
+	10: optional i64 schemaVersion
+	20: optional list<DynamicConfigEntry> entries
+}
+
+struct DynamicConfigEntry {
+  10: optional string name
+  20: optional list<DynamicConfigValue> values
+}
+
+struct DynamicConfigValue {
+  10: optional shared.DataBlob value
+  20: optional list<DynamicConfigFilter> filters
+}
+
+struct DynamicConfigFilter {
+  10: optional string name
+  20: optional shared.DataBlob value
 }

@@ -1833,19 +1833,3 @@ struct RespondCrossClusterTasksCompletedRequest {
 struct RespondCrossClusterTasksCompletedResponse {
   10: optional list<CrossClusterTaskRequest> tasks
 }
-
-struct DynamicConfigEntry {
-  10: optional string name
-  20: optional DataBlob default_value
-  30: optional list<DynamicConfigValue> values
-}
-
-struct DynamicConfigValue {
-  10: optional DataBlob value
-  20: optional list<DynamicConfigFilter> filters
-}
-
-struct DynamicConfigFilter {
-  10: optional string name
-  20: optional DataBlob value
-}

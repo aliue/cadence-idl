@@ -22,6 +22,7 @@ namespace java com.uber.cadence.admin
 
 include "shared.thrift"
 include "replicator.thrift"
+include "configStore.thrift"
 
 /**
 * AdminService provides advanced APIs for debugging and analysis with admin privilege
@@ -236,7 +237,7 @@ service AdminService {
       2: shared.InternalServiceError internalServiceError,
     )
 
-  ListDynamicConfigResponse ListDynamicConfig(1: ListDynamicConfigRequest request)
+  ListDynamicConfigResponse ListDynamicConfig()
     throws (
       1: shared.InternalServiceError internalServiceError,
     )
@@ -330,30 +331,25 @@ struct ResendReplicationTasksRequest {
 }
 
 struct GetDynamicConfigRequest {
-  10: optional string config_name
-  20: optional list<shared.DynamicConfigFilter> filters
+  10: optional string configName
+  20: optional list<configStore.DynamicConfigFilter> filters
 }
 
 struct GetDynamicConfigResponse {
   10: optional shared.DataBlob value
-  20: optional string value_source
 }
 
 struct UpdateDynamicConfigRequest {
-  10: optional string config_name
-  20: optional list<shared.DynamicConfigValue> config_values
+  10: optional string configName
+  20: optional list<configStore.DynamicConfigValue> configValues
 }
 
 struct RestoreDynamicConfigRequest {
-  10: optional string config_name
-  20: optional list<shared.DynamicConfigFilter> filters
-}
-
-struct ListDynamicConfigRequest {
-  10: optional string config_name
+  10: optional string configName
+  20: optional list<configStore.DynamicConfigFilter> filters
 }
 
 struct ListDynamicConfigResponse {
-  10: optional list<shared.DynamicConfigEntry> entries
+  10: optional list<configStore.DynamicConfigEntry> entries
 }
 
